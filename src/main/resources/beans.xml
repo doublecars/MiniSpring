@@ -4,7 +4,7 @@
     <bean id="aservice" class="com.mini.test.AServiceImpl">
         <property type="String" name="property1" value="CYY says "/>
         <property type="String" name="property2" value="hello!"/>
-        <property type="com.mini.test.BaseService" name="ref" ref="baseService"/>
+   <!--     <property type="com.mini.test.BaseService" name="ref" ref="baseService"/>-->
         <constructor-arg type="Integer" name="level" value="3"/>
         <constructor-arg type="String" name="name" value="abc"/>
     </bean>

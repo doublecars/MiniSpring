@@ -1,12 +1,15 @@
 package com.mini.test;
 
+import com.mini.beans.factory.annotation.Autowired;
+
 public class AServiceImpl implements AService {
 
     private String name;
     private Integer level;
     private String property1;
     private String property2;
-    private BaseService ref;
+    @Autowired
+    private BaseService baseService;
 
     public AServiceImpl() {
     }
@@ -55,11 +58,11 @@ public class AServiceImpl implements AService {
         System.out.println(property1 + property2);
     }
 
-    public BaseService getRef() {
-        return ref;
+    public BaseService getBaseService() {
+        return baseService;
     }
 
-    public void setRef(BaseService ref) {
-        this.ref = ref;
+    public void setBaseService(BaseService baseService) {
+        this.baseService = baseService;
     }
 }

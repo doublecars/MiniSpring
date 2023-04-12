@@ -1,9 +1,11 @@
 package com.mini.beans.factory.xml;
 
 import com.mini.beans.*;
+import com.mini.beans.factory.BeanFactory;
 import com.mini.beans.factory.config.ConstructorArgumentValue;
 import com.mini.beans.factory.config.ConstructorArgumentValues;
 import com.mini.beans.factory.config.BeanDefinition;
+import com.mini.beans.factory.support.AutowireCapableBeanFactory;
 import com.mini.beans.factory.support.SimpleBeanFactory;
 import com.mini.core.Resource;
 import org.dom4j.Element;
@@ -13,9 +15,9 @@ import java.util.List;
 
 public class XmlBeanDefinitionReader {
 
-    SimpleBeanFactory beanFactory;
+    AutowireCapableBeanFactory beanFactory;
 
-    public XmlBeanDefinitionReader(SimpleBeanFactory beanFactory) {
+    public XmlBeanDefinitionReader(AutowireCapableBeanFactory beanFactory) {
         this.beanFactory = beanFactory;
     }
 

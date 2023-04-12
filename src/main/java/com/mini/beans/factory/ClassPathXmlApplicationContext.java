@@ -1,6 +1,7 @@
 package com.mini.beans.factory;
 
-import com.mini.beans.factory.support.SimpleBeanFactory;
+import com.mini.beans.factory.support.AutowireCapableBeanFactory;
+import com.mini.beans.factory.support.AutowiredAnnotationBeanPostProcessor;
 import com.mini.beans.factory.xml.XmlBeanDefinitionReader;
 import com.mini.context.ApplicationEvent;
 import com.mini.context.ApplicationEventPublisher;
@@ -9,21 +10,41 @@ import com.mini.exception.BeansException;
 
 public class ClassPathXmlApplicationContext
         implements BeanFactory, ApplicationEventPublisher {
-   SimpleBeanFactory beanFactory;
+    AutowireCapableBeanFactory beanFactory;
 
     public ClassPathXmlApplicationContext(String fileName) {
         this(fileName, true);
     }
 
-    public ClassPathXmlApplicationContext(String fileName, boolean isRefresh){
-        SimpleBeanFactory simpleBeanFactory = new SimpleBeanFactory();
+    public ClassPathXmlApplicationContext(String fileName, boolean isRefresh) {
         ClassPathXmlResource resource = new ClassPathXmlResource(fileName);
-        XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(simpleBeanFactory);
+        AutowireCapableBeanFactory beanFactory = new AutowireCapableBeanFactory();
+        XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
         reader.loadBeanDefinitions(resource);
-        this.beanFactory  = simpleBeanFactory;
-        if (isRefresh){
-            this.beanFactory.refresh();
+        this.beanFactory = beanFactory;
+        if (isRefresh) {
+            try {
+                refresh();
+            } catch (BeansException e) {
+                throw new RuntimeException(e);
+            }
         }
+    }
+
+
+    public void registerBeanPostProcessors(AutowireCapableBeanFactory beanFactory) {
+        beanFactory.addBeanPostProcessor(new AutowiredAnnotationBeanPostProcessor());
+    }
+
+    public void refresh() throws BeansException, IllegalStateException {
+        // Register bean processors that intercept bean creation.
+        registerBeanPostProcessors(this.beanFactory);
+        // Initialize other special beans in specific context subclasses.
+        onRefresh();
+    }
+
+    public void onRefresh() {
+        this.beanFactory.refresh();
     }
 
     public Object getBean(String beanName) throws BeansException {

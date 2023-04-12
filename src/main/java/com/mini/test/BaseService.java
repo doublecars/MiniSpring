@@ -1,5 +1,7 @@
 package com.mini.test;
 
+import com.mini.beans.factory.annotation.Autowired;
+
 public class BaseService {
 
     private BaseBaseService bbs;
