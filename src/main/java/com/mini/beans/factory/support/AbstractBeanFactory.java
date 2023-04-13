@@ -2,7 +2,7 @@ package com.mini.beans.factory.support;
 
 import com.mini.beans.PropertyValue;
 import com.mini.beans.PropertyValues;
-import com.mini.beans.factory.BeanFactory;
+import com.mini.beans.factory.ConfigurableBeanFactory;
 import com.mini.beans.factory.config.BeanDefinition;
 import com.mini.beans.factory.config.ConstructorArgumentValue;
 import com.mini.beans.factory.config.ConstructorArgumentValues;
@@ -17,10 +17,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry implements BeanFactory, BeanDefinitionRegistry {
+public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry
+        implements ConfigurableBeanFactory, BeanDefinitionRegistry {
 
-    private Map<String, BeanDefinition> beanDefinitionMap = new ConcurrentHashMap<>(256);
-    private List<String> beanDefinitionNames = new ArrayList<>();
+    protected Map<String, BeanDefinition> beanDefinitionMap = new ConcurrentHashMap<>(256);
+    protected List<String> beanDefinitionNames = new ArrayList<>();
     private Map<String, Object> earlySingletonObjects = new HashMap<>(16);
 
     public AbstractBeanFactory() {
@@ -51,7 +52,7 @@ public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry i
                 singleton = createBean(beanDefinition);
 
                 //registry bean
-                this.registrySingleton(beanName, singleton);
+                this.registerSingleton(beanName, singleton);
 
                 // bean post processor
                 // 1. before
@@ -227,7 +228,7 @@ public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry i
     }
 
     public void registerBean(String beanName, Object obj) {
-        this.registrySingleton(beanName, obj);
+        this.registerSingleton(beanName, obj);
     }
 
     @Override

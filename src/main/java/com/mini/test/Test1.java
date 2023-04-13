@@ -1,6 +1,6 @@
 package com.mini.test;
 
-import com.mini.beans.factory.ClassPathXmlApplicationContext;
+import com.mini.context.ClassPathXmlApplicationContext;
 import com.mini.exception.BeansException;
 
 public class Test1 {

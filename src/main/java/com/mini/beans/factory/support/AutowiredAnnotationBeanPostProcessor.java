@@ -1,12 +1,13 @@
 package com.mini.beans.factory.support;
 
+import com.mini.beans.factory.BeanFactory;
 import com.mini.beans.factory.annotation.Autowired;
 import com.mini.exception.BeansException;
 
 import java.lang.reflect.Field;
 
 public class AutowiredAnnotationBeanPostProcessor implements BeanPostProcessor {
-    private AutowireCapableBeanFactory beanFactory;
+    private BeanFactory beanFactory;
 
     @Override
     public Object postProcessorBeforeInitialization(Object bean, String beanName) {
@@ -39,11 +40,12 @@ public class AutowiredAnnotationBeanPostProcessor implements BeanPostProcessor {
         return null;
     }
 
-    public AutowireCapableBeanFactory getBeanFactory() {
-        return this.beanFactory;
+    @Override
+    public void setBeanFactory(BeanFactory beanFactory) {
+        this.beanFactory  = beanFactory;
     }
 
-    public void setBeanFactory(AutowireCapableBeanFactory beanFactory) {
-        this.beanFactory = beanFactory;
+    public BeanFactory getBeanFactory() {
+        return this.beanFactory;
     }
 }
