@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<beans>
+    <bean id="aservice" class="com.mini.test.AServiceImpl">
+        <property type="String" name="property1" value="CYY says "/>
+        <property type="String" name="property2" value="hello!"/>
+   <!--     <property type="com.mini.test.BaseService" name="ref" ref="baseService"/>-->
+        <constructor-arg type="Integer" name="level" value="3"/>
+        <constructor-arg type="String" name="name" value="abc"/>
+    </bean>
+    <bean id="baseService" class="com.mini.test.BaseService">
+        <constructor-arg type="String" name="property" value="abc"/>
+        <property type="com.mini.test.BaseBaseService" name="bbs" ref="baseBaseService"/>
+    </bean>
+    <bean id="baseBaseService" class="com.mini.test.BaseBaseService">
+        <property type="com.mini.test.AServiceImpl" name="as" ref="aservice"/>
+    </bean>
+
+</beans>

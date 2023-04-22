@@ -35,12 +35,12 @@ public class DispatcherServlet extends HttpServlet {
 
     private Map<String, Method> mappingMethods = new HashMap<>();
 
-
+    private WebApplicationContext webApplicationContext;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-
+        this.webApplicationContext = (WebApplicationContext) this.getServletContext().getAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);
         String configLocation = config.getInitParameter("contextConfigLocation");
         URL xmlPath = null;
         try {
@@ -132,9 +132,7 @@ public class DispatcherServlet extends HttpServlet {
             Object obj = this.mappingObjs.get(sPath);
         try {
             objResult = method.invoke(obj);
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
-        } catch (InvocationTargetException e) {
+        } catch (IllegalAccessException | InvocationTargetException e) {
             throw new RuntimeException(e);
         }
 
